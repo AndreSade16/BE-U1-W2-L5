@@ -3,14 +3,14 @@ package andreasaderi.entities;
 public abstract class Gioco {
     private static int numOfGames = 0;
     protected long id;
-    private String title;
-    private int publishedYear;
-    private int price;
+    protected String title;
+    protected int publishedYear;
+    protected double price;
 
-    public Gioco(String title, int publishedYear, int price) {
+    public Gioco(String title, int publishedYear, double price) {
         this.id = ++numOfGames;
         this.title = title;
         this.publishedYear = publishedYear;
-        this.price = price;
+        this.price = price >= 0 ? price : -price;
     }
 }

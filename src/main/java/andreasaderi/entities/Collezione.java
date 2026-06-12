@@ -1,11 +1,15 @@
 package andreasaderi.entities;
 
-import andreasaderi.entities.exceptions.GameNotFound;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Collezione {
-    private List<Gioco> games;
+    private final List<Gioco> games;
+
+    public Collezione() {
+        this.games = new ArrayList<>();
+    }
 
     public void addGame(Gioco game) {
         if (games.stream().anyMatch(giocoInLista -> giocoInLista.id == game.id)) {
@@ -15,9 +19,26 @@ public class Collezione {
         }
     }
 
-    public Gioco searchById(long id) {
-        return games.stream().filter(gioco -> gioco.id == id).findFirst().orElseThrow(() -> new GameNotFound("Id non trovato"));
+    public Optional<Gioco> searchById(long id) {
+        Optional<Gioco> result = games.stream().filter(gioco -> gioco.id == id).findFirst();
+
+        if (result.isEmpty()) System.out.println("\nId non trovato: " + id);
+        return result;
+    }
+
+    public List<Gioco> searchByPrice(double price) {
+        return games.stream().filter(gioco -> gioco.price < price).toList();
+    }
+
+    public List<GiocoDaTavolo> searchByPlayers(int players) {
+        return games.stream().filter(gioco -> gioco instanceof GiocoDaTavolo game && game.numOfPlayers == players).map(gioco -> (GiocoDaTavolo) gioco).toList();
     }
 
 
+    @Override
+    public String toString() {
+        return "Collezione{" +
+                "games=" + games +
+                '}';
+    }
 }
