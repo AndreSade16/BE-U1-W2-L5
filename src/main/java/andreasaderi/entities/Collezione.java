@@ -1,5 +1,7 @@
 package andreasaderi.entities;
 
+import andreasaderi.entities.exceptions.GameNotFound;
+
 import java.util.*;
 
 public class Collezione {
@@ -11,25 +13,27 @@ public class Collezione {
 
     public void addGame(Gioco game) {
         if (games.stream().anyMatch(giocoInLista -> giocoInLista.id == game.id)) {
-            System.out.println("Gioco/ID già esistente");
+            System.out.println("Gioco/ID già presente nella collezione");
         } else {
             games.add(game);
         }
     }
 
     public Optional<Gioco> searchById(long id) {
-        Optional<Gioco> result = games.stream().filter(gioco -> gioco.id == id).findFirst();
 
-        if (result.isEmpty()) System.out.println("\nId non trovato: " + id);
-        return result;
+        return games.stream().filter(gioco -> gioco.id == id).findFirst();
     }
 
     public List<Gioco> searchByPrice(double price) {
-        return games.stream().filter(gioco -> gioco.price < price).toList();
+        List<Gioco> result = games.stream().filter(gioco -> gioco.price < price).toList();
+        if (result.isEmpty()) throw new GameNotFound("Nessun gioco trovato");
+        return result;
     }
 
     public List<GiocoDaTavolo> searchByPlayers(int players) {
-        return games.stream().filter(gioco -> gioco instanceof GiocoDaTavolo game && game.numOfPlayers == players).map(gioco -> (GiocoDaTavolo) gioco).toList();
+        List<GiocoDaTavolo> result = games.stream().filter(gioco -> gioco instanceof GiocoDaTavolo game && game.numOfPlayers == players).map(gioco -> (GiocoDaTavolo) gioco).toList();
+        if (result.isEmpty()) throw new GameNotFound("Nessun gioco trovato");
+        return result;
     }
 
     public void removeGame(long id) {
@@ -45,14 +49,18 @@ public class Collezione {
 
     public void updateGame(long id, Gioco gameToAdd) {
         Optional<Gioco> optGame = searchById(id);
-        if (optGame.isPresent()) {
-            Gioco game = optGame.get();
-            int index = games.indexOf(game);
-            games.set(index, gameToAdd);
-            System.out.println("Titolo: " + game.getTitle() + " - ID: " + game.getId());
-
+        Optional<Gioco> gameAlreadyThere = searchById(gameToAdd.getId());
+        if (gameAlreadyThere.isEmpty()) {
+            if (optGame.isPresent()) {
+                Gioco game = optGame.get();
+                int index = games.indexOf(game);
+                games.set(index, gameToAdd);
+                System.out.println("Titolo: " + game.getTitle() + " - ID: " + game.getId() + " rimpiazzato con " + gameToAdd.getTitle() + " - ID: " + gameToAdd.getId());
+            } else {
+                System.out.println("ID non trovato.");
+            }
         } else {
-            System.out.println("ID non trovato.");
+            System.out.println("Il gioco da inserire è già nella Collezione!");
         }
     }
 
@@ -67,6 +75,10 @@ public class Collezione {
                     "\nMedia prezzi: " + optAvg.getAsDouble());
         }
 
+    }
+
+    public List<Gioco> getGames() {
+        return games;
     }
 
     @Override
