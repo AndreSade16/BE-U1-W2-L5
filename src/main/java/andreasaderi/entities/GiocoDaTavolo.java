@@ -13,7 +13,7 @@ public class GiocoDaTavolo extends Gioco {
 
     @Override
     public String toString() {
-        return "GiocoDaTavolo{" +
+        return "\nGiocoDaTavolo{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", publishedYear=" + publishedYear +

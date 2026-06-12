@@ -19,7 +19,7 @@ public class Videogioco extends Gioco {
 
     @Override
     public String toString() {
-        return "Videogioco{" +
+        return "\nVideogioco{" +
                 "id=" + id +
                 ", title=" + title +
                 ", published in=" + publishedYear +
