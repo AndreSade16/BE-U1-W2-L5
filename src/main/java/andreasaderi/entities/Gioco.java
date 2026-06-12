@@ -13,4 +13,12 @@ public abstract class Gioco {
         this.publishedYear = publishedYear;
         this.price = price >= 0 ? price : -price;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 }

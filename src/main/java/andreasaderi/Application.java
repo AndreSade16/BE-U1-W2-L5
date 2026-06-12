@@ -41,7 +41,8 @@ public class Application {
         collezione1.searchById(1).ifPresent(System.out::println);
         System.out.println(collezione1.searchByPrice(30));
         System.out.println(collezione1.searchByPlayers(2));
-
+        collezione1.removeGame(5);
+        System.out.println(collezione1.searchByPlayers(2));
         ;
 
     }
