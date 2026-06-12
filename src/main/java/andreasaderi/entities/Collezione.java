@@ -1,8 +1,6 @@
 package andreasaderi.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Collezione {
     private final List<Gioco> games;
@@ -44,19 +42,31 @@ public class Collezione {
         }
     }
 
-//    Da fare!
 
-    public void updateGame(long id) {
+    public void updateGame(long id, Gioco gameToAdd) {
         Optional<Gioco> optGame = searchById(id);
         if (optGame.isPresent()) {
             Gioco game = optGame.get();
             int index = games.indexOf(game);
-            games.set(index, game);
+            games.set(index, gameToAdd);
             System.out.println("Titolo: " + game.getTitle() + " - ID: " + game.getId());
 
         } else {
             System.out.println("ID non trovato.");
         }
+    }
+
+    public void printCollectionStats() {
+        OptionalDouble optAvg = games.stream().mapToDouble(Gioco::getPrice).average();
+        Optional<Gioco> optMostExpensive = games.stream().sorted(Comparator.comparing(Gioco::getPrice).reversed()).limit(1).findFirst();
+        if (optMostExpensive.isEmpty() || optAvg.isEmpty()) {
+            System.out.println("La lista è vuota.");
+        } else {
+            System.out.println("Collection's size: " + games.size() +
+                    "\nGioco con prezzo più alto: " + optMostExpensive.get() +
+                    "\nMedia prezzi: " + optAvg.getAsDouble());
+        }
+
     }
 
     @Override

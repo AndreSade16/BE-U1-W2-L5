@@ -18,6 +18,10 @@ public abstract class Gioco {
         return id;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
     public String getTitle() {
         return title;
     }

@@ -31,19 +31,21 @@ public class Application {
 
 //        Prova dei metodi:
 
-        collezione1.addGame(videogioco1);
-        collezione1.addGame(videogioco2);
-        collezione1.addGame(videogioco4);
-        collezione1.addGame(giocoDaTavolo1);
-        collezione1.addGame(giocoDaTavolo2);
-        System.out.println(collezione1);
-        collezione1.searchById(3).ifPresent(System.out::println);
-        collezione1.searchById(1).ifPresent(System.out::println);
-        System.out.println(collezione1.searchByPrice(30));
-        System.out.println(collezione1.searchByPlayers(2));
-        collezione1.removeGame(5);
-        System.out.println(collezione1.searchByPlayers(2));
-        ;
+//        collezione1.addGame(videogioco1);
+//        collezione1.addGame(videogioco2);
+//        collezione1.addGame(videogioco4);
+//        collezione1.addGame(giocoDaTavolo1);
+//        collezione1.addGame(giocoDaTavolo2);
+//        System.out.println(collezione1);
+//        collezione1.searchById(3).ifPresent(System.out::println);
+//        collezione1.searchById(1).ifPresent(System.out::println);
+//        System.out.println(collezione1.searchByPrice(30));
+//        System.out.println(collezione1.searchByPlayers(2));
+//        collezione1.removeGame(5);
+//        System.out.println(collezione1.searchByPlayers(2));
+//        collezione1.updateGame(1, giocoDaTavolo3);
+//        System.out.println(collezione1);
+//        collezione1.printCollectionStats();
 
     }
 }
